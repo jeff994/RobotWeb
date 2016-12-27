@@ -50,6 +50,8 @@
 <script type="text/javascript">
 		// 百度地图API功能
 	var map = new BMap.Map("allmap");
+    map.addControl(new BMap.ScaleControl());  
+    map.addControl(new BMap.NavigationControl());  
 	lat = 31.205718
 	lon = 121.628857
 	var point = new BMap.Point(lon, lat);
