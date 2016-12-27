@@ -68,7 +68,7 @@
 	    map.removeOverlay(marker);
 	    console.log('Received message on ' + lon + ': ' + lat);
 		var point = new BMap.Point(lon, lat);
-		map.centerAndZoom(point, 20);
+		map.centerAndZoom(point, 19);
 		marker = new BMap.Marker(point);  // 创建标注
 		map.addOverlay(marker);               // 将标注添加到地图中
 		//marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
