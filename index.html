@@ -1,5 +1,81 @@
-#!/bin/bash
-echo "Hello, World"
-export ROS_MASTER_URI=http://ubuntu:11311/
-source ~/catkin_ws/devel/setup.bash
-roslaunch video_stream_open_cv webcam.launch
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=IRLYepkYHoZV6EYCBPC5sLlWkqu1RgL7"></script>
+	<script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+	<script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+
+	<title>添加动画标注点</title>
+
+	<script type="text/javascript">
+
+		
+
+
+
+		// Connecting to ROS
+	  // -----------------
+
+	  var ros = new ROSLIB.Ros({
+	    url : 'ws://localhost:9090'
+	  });
+
+	  ros.on('connection', function() {
+	    console.log('Connected to websocket server.');
+	  });
+
+	  ros.on('error', function(error) {
+	    console.log('Error connecting to websocket server: ', error);
+	  });
+
+	  ros.on('close', function() {
+	    console.log('Connection to websocket server closed.');
+	  });
+
+
+	  var listener = new ROSLIB.Topic({
+	    ros : ros,
+	    name : '/gps',
+	    messageType : 'std_msgs/String'
+	  });
+
+
+
+	</script>
+
+</head>
+<body>
+  <div id="allmap"></div>
+</body>
+<script type="text/javascript">
+		// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	lat = 31.205718
+	lon = 121.628857
+	var point = new BMap.Point(lon, lat);
+	map.centerAndZoom(point, 15);
+	marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);               // 将标注添加到地图中
+	var marker
+	listener.subscribe(function(message) {
+	    console.log('Received message on ' + listener.name + ': ' + message.data);
+	    var [lonstr, latstr, bearingstr] = message.data.split(' ');
+	    lon = parseFloat(lonstr);
+	    lat = parseFloat(latstr)
+	    bearing = parseFloat(bearingstr)
+	    map.removeOverlay(marker);
+	    console.log('Received message on ' + lon + ': ' + lat);
+		var point = new BMap.Point(lon, lat);
+		map.centerAndZoom(point, 25);
+		marker = new BMap.Marker(point);  // 创建标注
+		map.addOverlay(marker);               // 将标注添加到地图中
+		//marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+		lat = lat + 0.001;
+	 });
+</script>
+</html>
