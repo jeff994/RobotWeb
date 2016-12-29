@@ -48,17 +48,24 @@
   <div id="allmap"></div>
 </body>
 <script type="text/javascript">
+
+	var removeMarker = function(e,ee,marker){
+		window.open("http://www.yahoo.com", 'newwindow','height=100,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+	}
 		// 百度地图API功能
 	var map = new BMap.Map("allmap");
     map.addControl(new BMap.ScaleControl());  
     map.addControl(new BMap.NavigationControl());  
 	lat = 31.205718
 	lon = 121.628857
+	var markerMenu=new BMap.ContextMenu();
 	var point = new BMap.Point(lon, lat);
 	map.centerAndZoom(point, 19);
-	marker = new BMap.Marker(point);  // 创建标注
+	var marker = new BMap.Marker(point);  // 创建标注
 	map.addOverlay(marker);               // 将标注添加到地图中
-	var marker
+	markerMenu.addItem(new BMap.MenuItem('打开视频',removeMarker.bind(marker)));
+	marker.addContextMenu(markerMenu);
+
 	listener.subscribe(function(message) {
 	    console.log('Received message on ' + listener.name + ': ' + message.data);
 	    var [lonstr, latstr, bearingstr] = message.data.split(' ');
