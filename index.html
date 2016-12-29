@@ -62,8 +62,11 @@
 	listener.subscribe(function(message) {
 	    console.log('Received message on ' + listener.name + ': ' + message.data);
 	    var [lonstr, latstr, bearingstr] = message.data.split(' ');
-	    lon = parseFloat(lonstr);
-	    lat = parseFloat(latstr)
+	    lon_new = parseFloat(lonstr);
+	    lat_new = parseFloat(latstr)
+	    if(lat_new == lat && lon_new == lon)
+	    	return;
+
 	    bearing = parseFloat(bearingstr)
 	    map.removeOverlay(marker);
 	    console.log('Received message on ' + lon + ': ' + lat);
@@ -71,7 +74,8 @@
 		marker = new BMap.Marker(point);  // 创建标注
 		map.addOverlay(marker);               // 将标注添加到地图中
 		//marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-		lat = lat + 0.001;
+		lat = lat_new
+		lon = lon_new
 	 });
 </script>
 </html>
