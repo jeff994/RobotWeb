@@ -77,12 +77,12 @@ https://www.yahoo.com/ </body>
 <script type="text/javascript">
 
         var removeMarker = function(e,ee,marker){
-                window.open("http://www.yahoo.com", 'newwindow','height=100,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+                window.open("http://localhost:8080/stream?topic=/webcam/image_raw&type=mjpeg", 'newwindow','height=490,width=660,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
         }
                 // 百度地图API功能
         var map = new BMap.Map("allmap");
-    map.addControl(new BMap.ScaleControl());  
-    map.addControl(new BMap.NavigationControl());  
+	    map.addControl(new BMap.ScaleControl());  
+	    map.addControl(new BMap.NavigationControl());  
         lat = 31.205718
         lon = 121.628857
         var markerMenu=new BMap.ContextMenu();
@@ -102,11 +102,15 @@ https://www.yahoo.com/ </body>
                     return;
 
             bearing = parseFloat(bearingstr)
-            map.removeOverlay(marker);
             console.log('Received message on ' + lon + ': ' + lat);
                 var point = new BMap.Point(lon, lat);
-                marker = new BMap.Marker(point);  // 创建标注
-                map.addOverlay(marker);               // 将标注添加到地图中
+                marker.setPosition(point);
+                map.panTo(point);
+              /*  map.addOverlay(marker);               // 将标注添加到地图中
+                var markerMenu=new BMap.ContextMenu();
+                markerMenu.addItem(new BMap.MenuItem('打开视频',removeMarker.bind(marker)));
+        		marker.addContextMenu(markerMenu);*/
+
                 //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
                 lat = lat_new
                 lon = lon_new
