@@ -30,7 +30,7 @@
           // -----------------
 
           var ros = new ROSLIB.Ros({
-            url : 'ws://localhost:9090'
+            url : 'ws://192.168.3.82:9090'
           });
 
           ros.on('connection', function() {
@@ -77,14 +77,14 @@ https://www.yahoo.com/ </body>
 <script type="text/javascript">
 
         var removeMarker = function(e,ee,marker){
-                window.open("http://localhost:8080/stream?topic=/webcam/image_raw&type=mjpeg", 'newwindow','height=490,width=660,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+                window.open("http://192.168.3.82:8080/stream?topic=/webcam/image_raw&type=mjpeg", 'newwindow','height=490,width=660,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
         }
                 // 百度地图API功能
         var map = new BMap.Map("allmap");
 	    map.addControl(new BMap.ScaleControl());  
 	    map.addControl(new BMap.NavigationControl());  
-        lat = 31.205718
-        lon = 121.628857
+        lat = 31.2
+        lon = 121.6
         var markerMenu=new BMap.ContextMenu();
         var point = new BMap.Point(lon, lat);
         map.centerAndZoom(point, 19);
@@ -92,6 +92,9 @@ https://www.yahoo.com/ </body>
         map.addOverlay(marker);               // 将标注添加到地图中
         markerMenu.addItem(new BMap.MenuItem('打开视频',removeMarker.bind(marker)));
         marker.addContextMenu(markerMenu);
+
+        marker.setPosition(point);
+        map.panTo(point);
 
         listener.subscribe(function(message) {
             console.log('Received message on ' + listener.name + ': ' + message.data);
@@ -102,18 +105,30 @@ https://www.yahoo.com/ </body>
                     return;
 
             bearing = parseFloat(bearingstr)
-            console.log('Received message on ' + lon + ': ' + lat);
-                var point = new BMap.Point(lon, lat);
-                marker.setPosition(point);
-                map.panTo(point);
+                
+           	point = new BMap.Point(lon_new, lat_new);
+          
+          	console.log('Old 1: ' + lon + ': ' + lat);
+            console.log('New 2: ' + lon_new + ': ' + lat_new);
+
+            var polyline = new BMap.Polyline([    
+				new BMap.Point(lon, lat),
+				new BMap.Point(lon_new, lat_new)
+				 ],    
+				{strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
+			); 
+             
+			map.addOverlay(polyline);
+            marker.setPosition(point);
+            map.panTo(point);
               /*  map.addOverlay(marker);               // 将标注添加到地图中
                 var markerMenu=new BMap.ContextMenu();
                 markerMenu.addItem(new BMap.MenuItem('打开视频',removeMarker.bind(marker)));
         		marker.addContextMenu(markerMenu);*/
 
                 //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-                lat = lat_new
-                lon = lon_new
+            lat = lat_new
+            lon = lon_new
          });
 </script>
 </html>
