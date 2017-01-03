@@ -22,6 +22,9 @@
                 .navi li{width:20%;float:left;}
                 .navi li a{width:100%;height:28px;font-size:12px;text-align:center;color:#ccc;padding-top:10px; text-decoration: none; display:block;}
                 .navi li a:hover{color:#fff;}
+  .auto-style1 {
+	text-align: center;
+}
   </style>
   <title>机器人控制</title>
   <script type="text/javascript">
@@ -56,6 +59,35 @@
 
 <body>
 
+<script>
+
+	  	function forward() 
+	  	{
+	  		alert("Forward command received!");
+	  	}
+	  	
+	  	function backward()
+	  	{
+	  		alert("Backward command received!");
+	  	}
+	  	
+	  	function stop()
+	  	{
+	  		alert("Stop command received!");
+	  	}
+	  	
+	  	function left_turn()
+	  	{
+	  		alert("Left turn command received!"); 
+	  	}
+	  	
+	  	function right_turn()
+	  	{
+	  		alert("Right turn command received!"); 
+	  	}
+
+</script>
+
 <div class="navi">
 <ul>
   <li><a href="index.html" target="_blank">主页</a></li>
@@ -78,41 +110,24 @@
     <tr>
       <td></td>
       <td>
-        <p></p>
 
-        <p></p>
-
-        <p></p>
-
-        <p></p>
+        <p class="auto-style1" >
+		<img alt="" src="img/imgE.gif" accesskey="w" onclick="forward()"></p>
       </td>
       <td></td>
     </tr>
     <tr>
-      <td></td>
+      <td class="auto-style1">
+	  <img alt="" src="img/img10.gif" style="float: right" accesskey="A" onclick="left_turn()" ></td>
       <td>
-        <p></p>
-
-        <p></p>
-
-        <p></p>
-
-        <p></p>
+        <p class="auto-style1"><img alt="" src="img/img17.gif" accesskey="Q" onclick="stop()"></p>
       </td>
-      <td></td>
+      <td><img alt="" src="img/img12.gif" style="float: left" accesskey="D" onclick="right_turn()"></td>
     </tr>
     <tr>
       <td></td>
       <td>
-        <p></p>
-
-        <p></p>
-
-        <p></p>
-
-        <p></p>
-
-        <p></p>
+        <p class="auto-style1"><img alt="" src="img/img14.gif" accesskey="S" onclick="backward()"></p>
       </td>
       <td></td>
     </tr>
