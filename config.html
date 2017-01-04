@@ -77,8 +77,25 @@
 	// 百度地图API功能
 	var map = new BMap.Map("allmap");            
 	map.centerAndZoom("重庆",12);           
-	//单击获取点击的经纬度
+	//单击获取点击的经纬
+  var point = new BMap.Point(0, 0);
+  var point_new = new BMap.Point(0, 0); 
+  var no_point = 1; 
 	map.addEventListener("click",function(e){
-		alert(e.point.lng + "," + e.point.lat);
+    point_new = new BMap.Point(e.point.lng, e.point.lat);
+    var marker = new BMap.Marker(point_new);
+    map.addOverlay(marker); 
+    if(no_point > 1)
+    {
+      var polyline = new BMap.Polyline([    
+          point,
+          point_new
+         ],    
+        {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
+      ); 
+    }
+    map.addOverlay(polyline);
+    no_point = no_point + 1;
+    point = point_new; 
 	});
 </script>
