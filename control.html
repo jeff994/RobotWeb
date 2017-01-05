@@ -68,8 +68,13 @@
 
     function publish(str)
     {
-      publisher.publish(str);
-      console.log('Publish forward');
+      var twist = new ROSLIB.Message(
+          {
+            data : str
+          }
+        )
+      publisher.publish(twist);
+      console.log('Publish message');
     }
 
     function forward() 
