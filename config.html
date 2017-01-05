@@ -76,7 +76,9 @@
 <script type="text/javascript">
 	// 百度地图API功能
 	var map = new BMap.Map("allmap");            
-	map.centerAndZoom("重庆",12);           
+  map.addControl(new BMap.ScaleControl());  
+  map.addControl(new BMap.NavigationControl());  
+	map.centerAndZoom("上海", 19);           
 	//单击获取点击的经纬
   var point = new BMap.Point(0, 0);
   var point_new = new BMap.Point(0, 0); 

@@ -31,9 +31,8 @@
 
                 // Connecting to ROS
           // -----------------
-
           var ros = new ROSLIB.Ros({
-            url : 'ws://localhost:9090'
+            url : 'ws://192.168.23.202:9090'
           });
 
           ros.on('connection', function() {
@@ -61,30 +60,40 @@
 
 <script>
 
-	  	function forward() 
-	  	{
-	  		alert("Forward command received!");
-	  	}
-	  	
-	  	function backward()
-	  	{
-	  		alert("Backward command received!");
-	  	}
-	  	
-	  	function stop()
-	  	{
-	  		alert("Stop command received!");
-	  	}
-	  	
-	  	function left_turn()
-	  	{
-	  		alert("Left turn command received!"); 
-	  	}
-	  	
-	  	function right_turn()
-	  	{
-	  		alert("Right turn command received!"); 
-	  	}
+    const nh = rosnodejs.nh;
+    const pub = nh.advertise('/keyboard', 'std_msgs/String');
+
+  	function forward() 
+  	{
+      publish("Forward");
+  	}
+  	
+  	function backward()
+  	{
+       publish("Backward");
+  	}
+  	
+  	function stop()
+  	{
+      publish("Switch");
+  	}
+  	
+  	function left_turn()
+  	{
+  		publish("Turn_West");
+  	}
+  	
+  	function right_turn()
+  	{
+  		publish("Turn_Right");
+  	}
+
+    function publish(str)
+    {
+      const msg = new std_msgs.msg.String();
+      msg.data = str;
+      pub.publish(msg);
+    }
 
 </script>
 
