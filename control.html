@@ -74,32 +74,36 @@
           }
         )
       publisher.publish(twist);
-      console.log('Publish message');
     }
 
     function forward() 
   	{
       publish('Forward');
+      console.log('Robot forwarding');
   	}
   	
   	function backward()
   	{
        publish('Backward');
+       console.log('Robot backwarding');
   	}
   	
   	function stop()
   	{
       publish('Switch');
+       console.log('Eanble/Distable robot');
   	}
   	
   	function left_turn()
   	{
   		publish('Turn_West');
+      console.log('Left turn');
   	}
   	
   	function right_turn()
   	{
   		publish('Turn_Right');
+      console.log('Right turn');
   	}
 
 </script>
