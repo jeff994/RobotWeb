@@ -60,8 +60,11 @@
 
 <script>
 
-    const nh = rosnodejs.nh;
-    const pub = nh.advertise('/keyboard', 'std_msgs/String');
+     var publisher = new ROSLIB.Topic({
+            ros : ros,
+            name : '/keyboard',
+            messageType : 'std_msgs/String'
+          });
 
   	function forward() 
   	{
@@ -90,9 +93,7 @@
 
     function publish(str)
     {
-      const msg = new std_msgs.msg.String();
-      msg.data = str;
-      pub.publish(msg);
+      publisher.publish(str);
     }
 
 </script>

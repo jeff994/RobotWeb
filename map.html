@@ -45,6 +45,12 @@
             console.log('Connection to websocket server closed.');
           });
 
+           var publisher = new ROSLIB.Topic({
+              ros : ros,
+              name : '/keyboard',
+              messageType : 'std_msgs/String'
+            });
+
 
           var listener = new ROSLIB.Topic({
             ros : ros,
@@ -81,8 +87,8 @@
         }
                 // 百度地图API功能
       var map = new BMap.Map("allmap");
-	    map.addControl(new BMap.ScaleControl());  
-	    map.addControl(new BMap.NavigationControl());  
+	      map.addControl(new BMap.ScaleControl());  
+	     map.addControl(new BMap.NavigationControl());  
         lat = 31.2
         lon = 121.6
         var markerMenu=new BMap.ContextMenu();
