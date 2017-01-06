@@ -25,34 +25,34 @@
   </style>
   <title>机器人配置</title>
   <script type="text/javascript">
+    // Connecting to ROS
+    // -----------------
 
-                // Connecting to ROS
-          // -----------------
+    // var ros = new ROSLIB.Ros({
+    //   url : 'ws://localhost:9090'
+    // });
 
-          var ros = new ROSLIB.Ros({
-            url : 'ws://localhost:9090'
-          });
+    // ros.on('connection', function() {
+    //   console.log('Connected to websocket server.');
+    // });
 
-          ros.on('connection', function() {
-            console.log('Connected to websocket server.');
-          });
+    // ros.on('error', function(error) {
+    //   console.log('Error connecting to websocket server: ', error);
+    // });
 
-          ros.on('error', function(error) {
-            console.log('Error connecting to websocket server: ', error);
-          });
-
-          ros.on('close', function() {
-            console.log('Connection to websocket server closed.');
-          });
+    // ros.on('close', function() {
+    //   console.log('Connection to websocket server closed.');
+    // });
 
 
-          var listener = new ROSLIB.Topic({
-            ros : ros,
-            name : '/gps',
-            messageType : 'std_msgs/String'
-          });
+    // var listener = new ROSLIB.Topic({
+    //   ros : ros,
+    //   name : '/gps',
+    //   messageType : 'std_msgs/String'
+    // });
   </script>
 </head>
+
 
 <body>
 
@@ -66,26 +66,41 @@
 </ul>
 </div>
 
-<center class="fontCenter">
-机器人配置</center>
+<div>
+<table  width= '100%'>
+  <tr>
+    <td width="20%"></td> 
+    <td width="60%"><center class="fontCenter"> 机器人配置</center></td>
+    <td align="right" width="20%"><button type="button" onclick="save_route()">Save</button></td>
+  </tr>
+</table>
+</div>
 
 <div id="allmap">
 </div>
 </body>
 </html>
+
 <script type="text/javascript">
-	// 百度地图API功能
-	var map = new BMap.Map("allmap");            
+  // 百度地图API功能
+  var map = new BMap.Map("allmap");            
   map.addControl(new BMap.ScaleControl());  
   map.addControl(new BMap.NavigationControl());  
-	map.centerAndZoom("上海", 19);           
-	//单击获取点击的经纬
+  map.centerAndZoom("上海", 19);           
+  //单击获取点击的经纬
   var point = new BMap.Point(0, 0);
   var point_new = new BMap.Point(0, 0); 
   var no_point = 1; 
-	map.addEventListener("click",function(e){
+  var route = '{ "route" : [';
+
+  map.addEventListener("click",function(e){
+    if(no_point != 1) 
+    {
+      route += ",";
+    }
     point_new = new BMap.Point(e.point.lng, e.point.lat);
     var marker = new BMap.Marker(point_new);
+    route += '{"lon": "' + e.point.lng.toString() + '","lat":"' + e.point.lat.toString() + '"}';
     map.addOverlay(marker); 
     if(no_point > 1)
     {
@@ -99,5 +114,27 @@
     map.addOverlay(polyline);
     no_point = no_point + 1;
     point = point_new; 
-	});
+    console.log(route);
+  });
+
+   var publisher = new ROSLIB.Topic({
+        ros : ros,
+        name : '/job',
+        messageType : 'std_msgs/String'
+      });
+
+
+  function publish(str)
+  {
+    var twist = new ROSLIB.Message({data : str})
+    publisher.publish(twist);
+  }
+
+  function save_route()
+  {
+    route += ']}'
+    ppublish(route)
+    console.log(route);
+  }
 </script>
+
