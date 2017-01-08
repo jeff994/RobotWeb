@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <style type="text/css">
-        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
   </style>
   <script type="text/javascript"
   src="http://api.map.baidu.com/api?v=2.0&amp;ak=IRLYepkYHoZV6EYCBPC5sLlWkqu1RgL7">
@@ -50,13 +50,13 @@
 
           var listener = new ROSLIB.Topic({
             ros : ros,
-            name : '/gps',
+            name : '/status',
             messageType : 'std_msgs/String'
           });
   </script>
 </head>
 
-<body>
+<body overflow:auto>
 
 <script>
 
@@ -118,40 +118,49 @@
 </ul>
 </div>
 
+<div>
 <center class="fontCenter">
 机器人控制</center>
+</div>
+<div overflow:auto>
+  <table border="1" style="width: 100%">
+    <caption></caption>
+    <col>
+    <col>
+    <col>
+    <tbody>
+      <tr>
+        <td></td>
+        <td>
 
-<table border="1" style="width: 100%">
-  <caption></caption>
-  <col>
-  <col>
-  <col>
-  <tbody>
-    <tr>
-      <td></td>
-      <td>
-
-        <p class="auto-style1" >
-		<img alt="" src="img/imgE.gif" accesskey="w" onclick="forward()"></p>
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="auto-style1">
-	  <img alt="" src="img/img10.gif" style="float: right" accesskey="A" onclick="left_turn()" ></td>
-      <td>
-        <p class="auto-style1"><img alt="" src="img/img17.gif" accesskey="Q" onclick="stop()"></p>
-      </td>
-      <td><img alt="" src="img/img12.gif" style="float: left" accesskey="D" onclick="right_turn()"></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td>
-        <p class="auto-style1"><img alt="" src="img/img14.gif" accesskey="S" onclick="backward()"></p>
-      </td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+          <p class="auto-style1" >
+  		<img alt="" src="img/forward.gif" accesskey="w" onclick="forward()"></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="auto-style1">
+  	  <img alt="" src="img/left.gif" style="float: right" accesskey="A" onclick="left_turn()" ></td>
+        <td>
+          <p class="auto-style1"><img alt="" src="img/disabled.gif" accesskey="Q" onclick="stop()"></p>
+        </td>
+        <td><img alt="" src="img/right.gif" style="float: left" accesskey="D" onclick="right_turn()"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <p class="auto-style1"><img alt="" src="img/backward.gif" accesskey="S" onclick="backward()"></p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </body>
+<script>
+   listener.subscribe(function(message) {
+           
+       } 
+      ); 
+</script>
 </html>
