@@ -24,32 +24,7 @@
                 .navi li a:hover{color:#fff;}
   </style>
   <title>机器人配置</title>
-  <script type="text/javascript">
-    // Connecting to ROS
-    // -----------------
-
-    var ros = new ROSLIB.Ros({
-      url : 'ws://192.168.23.62:9090'
-    });
-
-    ros.on('connection', function() {
-      console.log('Connected to websocket server.');
-    });
-
-    ros.on('error', function(error) {
-      console.log('Error connecting to websocket server: ', error);
-    });
-
-    ros.on('close', function() {
-      console.log('Connection to websocket server closed.');
-    });
-
-
-    var listener = new ROSLIB.Topic({
-      ros : ros,
-      name : '/gps',
-      messageType : 'std_msgs/String'
-    });
+  <script type="text/javascript" >
   </script>
 </head>
 
@@ -81,7 +56,14 @@
 </body>
 </html>
 
-<script type="text/javascript">
+<script type="text/javascript" src="/js/ros_handle.js">
+
+  function publish(str)
+  {
+    var twist = new ROSLIB.Message({data : str})
+    publisher.publish(twist);
+  }
+
   // 百度地图API功能
   var map = new BMap.Map("allmap");            
   map.addControl(new BMap.ScaleControl());  
@@ -116,18 +98,6 @@
     point = point_new; 
     console.log(route);
   });
-
-   var publisher = new ROSLIB.Topic({
-        ros : ros,
-        name : '/job',
-        messageType : 'std_msgs/String'
-      });
-
-  function publish(str)
-  {
-    var twist = new ROSLIB.Message({data : str})
-    publisher.publish(twist);
-  }
 
   function save_route()
   {
