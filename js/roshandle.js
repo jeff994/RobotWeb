@@ -14,7 +14,7 @@
      console.log('Connection to websocket server closed.');
  });
 
- var listener = new ROSLIB.Topic({
+ var gps_listener = new ROSLIB.Topic({
      ros: ros,
      name: '/gps',
      messageType: 'std_msgs/String'
@@ -26,7 +26,7 @@
      messageType: 'std_msgs/String'
  });
 
- var publisher_keyboard = new ROSLIB.Topic({
+ var publisher_command = new ROSLIB.Topic({
      ros: ros,
      name: '/keyboard',
      messageType: 'std_msgs/String'

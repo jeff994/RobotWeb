@@ -24,7 +24,9 @@
                 .navi li a:hover{color:#fff;}
   </style>
   <title>机器人位置</title>
-  <script type="text/javascript" src='js/roshandle.js'>var map; </script>
+  <script type="text/javascript" src='js/roshandle.js'>
+    var map; 
+  </script>
   <script type="text/javascript" src='js/videohandle.js'> </script>
   <script type="text/javascript" src='js/maphandle.js'> </script>
 </head>
@@ -53,6 +55,7 @@
   // add a marker for the ini point 
   var marker = new BMap.Marker(point);  // 创建标注
   map.addOverlay(marker);               // 将标注添加到地图中
+  var markerMenu=new BMap.ContextMenu();
   markerMenu.addItem(new BMap.MenuItem('打开视频',openVideo.bind(marker)));
   marker.addContextMenu(markerMenu);
   marker.setPosition(point);
