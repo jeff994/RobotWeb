@@ -24,46 +24,9 @@
                 .navi li a:hover{color:#fff;}
   </style>
   <title>机器人位置</title>
-<<<<<<< HEAD
   <script type="text/javascript" src='js/roshandle.js'>var map; </script>
   <script type="text/javascript" src='js/videohandle.js'> </script>
   <script type="text/javascript" src='js/maphandle.js'> </script>
-=======
-  <script type="text/javascript">
-
-                // Connecting to ROS
-          // -----------------
-
-          var ros = new ROSLIB.Ros({
-            url : 'ws://192.168.100.101:9090'
-          });
-
-          ros.on('connection', function() {
-            console.log('Connected to websocket server.');
-          });
-
-          ros.on('error', function(error) {
-            console.log('Error connecting to websocket server: ', error);
-          });
-
-          ros.on('close', function() {
-            console.log('Connection to websocket server closed.');
-          });
-
-           var publisher = new ROSLIB.Topic({
-              ros : ros,
-              name : '/keyboard',
-              messageType : 'std_msgs/String'
-            });
-
-
-          var listener = new ROSLIB.Topic({
-            ros : ros,
-            name : '/gps',
-            messageType : 'std_msgs/String'
-          });
-  </script>
->>>>>>> origin/master
 </head>
 
 <body>
@@ -79,14 +42,12 @@
 </div>
 
 <center class="fontCenter">机器人在这里</center>
-<div id="allmap">
-</div> 
+<div id="allmap"></div> 
 </body>
 <script type="text/javascript">
   // 百度地图API功能
   lat = 31.2
   lon = 121.6
-
   var point = new BMap.Point(lon, lat);
   init_map("allmap", point);
   // add a marker for the ini point 
