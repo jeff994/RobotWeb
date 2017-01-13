@@ -24,38 +24,15 @@
                 .navi li a:hover{color:#fff;}
   </style>
   <title>机器人配置</title>
-  <script type="text/javascript">
-    // Connecting to ROS
-    // -----------------
 
-    var ros = new ROSLIB.Ros({
-      url : 'ws://192.168.23.62:9090'
-    });
-
-    ros.on('connection', function() {
-      console.log('Connected to websocket server.');
-    });
-
-    ros.on('error', function(error) {
-      console.log('Error connecting to websocket server: ', error);
-    });
-
-    ros.on('close', function() {
-      console.log('Connection to websocket server closed.');
-    });
-
-
-    var listener = new ROSLIB.Topic({
-      ros : ros,
-      name : '/gps',
-      messageType : 'std_msgs/String'
-    });
-  </script>
+<script src="js/roshandle.js" type="text/javascript">
+  var route; 
+  var map; 
+  var no_point; 
+</script>
 </head>
 
-
 <body>
-
 <div class="navi">
 <ul>
   <li><a href="index.html" target="_blank">主页</a></li>
@@ -82,16 +59,22 @@
 </html>
 
 <script type="text/javascript">
+  function init_parameters()
+  {
+    no_point = 1; 
+    route = '{ "route" : ['; 
+  }
+
   // 百度地图API功能
-  var map = new BMap.Map("allmap");            
+  map = new BMap.Map("allmap");            
   map.addControl(new BMap.ScaleControl());  
   map.addControl(new BMap.NavigationControl());  
   map.centerAndZoom("上海", 19);           
   //单击获取点击的经纬
   var point = new BMap.Point(0, 0);
   var point_new = new BMap.Point(0, 0); 
-  var no_point = 1; 
-  var route = '{ "route" : [';
+  // Initialize parameters 
+  init_parameters(); 
 
   map.addEventListener("click",function(e){
     if(no_point != 1) 
@@ -117,23 +100,13 @@
     console.log(route);
   });
 
-   var publisher = new ROSLIB.Topic({
-        ros : ros,
-        name : '/job',
-        messageType : 'std_msgs/String'
-      });
-
-  function publish(str)
-  {
-    var twist = new ROSLIB.Message({data : str})
-    publisher.publish(twist);
-  }
-
-  function save_route()
-  {
-    route += ']}'
-    publish(route)
-    console.log(route);
-  }
+ function save_route() {
+     route += ']}'
+     publish_job(route)
+     console.log(route);
+     map.clearOverlays();
+     init_parameters(); 
+ }
+  
 </script>
 

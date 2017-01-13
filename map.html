@@ -24,39 +24,8 @@
                 .navi li a:hover{color:#fff;}
   </style>
   <title>机器人位置</title>
-  <script type="text/javascript">
-
-                // Connecting to ROS
-          // -----------------
-
-          var ros = new ROSLIB.Ros({
-            url : 'ws://192.168.23.202:9090'
-          });
-
-          ros.on('connection', function() {
-            console.log('Connected to websocket server.');
-          });
-
-          ros.on('error', function(error) {
-            console.log('Error connecting to websocket server: ', error);
-          });
-
-          ros.on('close', function() {
-            console.log('Connection to websocket server closed.');
-          });
-
-           var publisher = new ROSLIB.Topic({
-              ros : ros,
-              name : '/keyboard',
-              messageType : 'std_msgs/String'
-            });
-
-
-          var listener = new ROSLIB.Topic({
-            ros : ros,
-            name : '/gps',
-            messageType : 'std_msgs/String'
-          });
+  <script type="text/javascript" src='js/roshandle.js'>
+    var map; 
   </script>
 </head>
 
@@ -72,69 +41,52 @@
 </ul>
 </div>
 
-<center class="fontCenter">
-机器人在这里</center>
-
-<p></p>
-
+<center class="fontCenter">机器人在这里</center>
 <div id="allmap">
 </div> 
 </body>
 <script type="text/javascript">
 
-        var removeMarker = function(e,ee,marker){
-                window.open("http://192.168.23.202:8080/stream?topic=/webcam/image_raw&type=mjpeg", 'newwindow','height=490,width=660,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
-        }
-                // 百度地图API功能
-      var map = new BMap.Map("allmap");
-	      map.addControl(new BMap.ScaleControl());  
-	     map.addControl(new BMap.NavigationControl());  
-        lat = 31.2
-        lon = 121.6
-        var markerMenu=new BMap.ContextMenu();
-        var point = new BMap.Point(lon, lat);
-        map.centerAndZoom(point, 19);
-        var marker = new BMap.Marker(point);  // 创建标注
-        map.addOverlay(marker);               // 将标注添加到地图中
-        markerMenu.addItem(new BMap.MenuItem('打开视频',removeMarker.bind(marker)));
-        marker.addContextMenu(markerMenu);
+  var openVideo = function(e,ee,marker){
+    window.open("http://192.168.23.202:8080/stream?topic=/webcam/image_raw&type=mjpeg", 'newwindow','height=490,width=660,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+    }
+  // 百度地图API功能
+  lat = 31.2
+  lon = 121.6
 
-        marker.setPosition(point);
-        map.panTo(point);
+  var point = new BMap.Point(lon, lat);
+  init_map("allmap", point);
+  // add a marker for the ini point 
+  var marker = new BMap.Marker(point);  // 创建标注
+  map.addOverlay(marker);               // 将标注添加到地图中
+  markerMenu.addItem(new BMap.MenuItem('打开视频',openVideo.bind(marker)));
+  marker.addContextMenu(markerMenu);
+  marker.setPosition(point);
+  map.panTo(point);
 
-        listener.subscribe(function(message) {
-            console.log('Received message on ' + listener.name + ': ' + message.data);
-            var [lonstr, latstr, bearingstr] = message.data.split(' ');
-            lon_new = parseFloat(lonstr);
-            lat_new = parseFloat(latstr)
-            if(lat_new == lat && lon_new == lon)
-                    return;
+  // call back of handle of ros, update robot position on the map 
+  gps_listener.subscribe(function(message) {
+    console.log('Received message on ' + gps_listener.name + ': ' + message.data);
+    var [lonstr, latstr, bearingstr] = message.data.split(' ');
+    lon_new = parseFloat(lonstr);
+    lat_new = parseFloat(latstr)
+    if(lat_new == lat && lon_new == lon)
+            return;
+    bearing = parseFloat(bearingstr)
+    point = new BMap.Point(lon_new, lat_new);
 
-            bearing = parseFloat(bearingstr)
-                
-           	point = new BMap.Point(lon_new, lat_new);
-          
-          	console.log('Old 1: ' + lon + ': ' + lat);
-            console.log('New 2: ' + lon_new + ': ' + lat_new);
+    console.log('Old 1: ' + lon + ': ' + lat);
+    console.log('New 2: ' + lon_new + ': ' + lat_new);
 
-            var polyline = new BMap.Polyline([    
-				new BMap.Point(lon, lat),
-				new BMap.Point(lon_new, lat_new)
-				 ],    
-				{strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
-			); 
-             
-			map.addOverlay(polyline);
-            marker.setPosition(point);
-            map.panTo(point);
-              /*  map.addOverlay(marker);               // 将标注添加到地图中
-                var markerMenu=new BMap.ContextMenu();
-                markerMenu.addItem(new BMap.MenuItem('打开视频',removeMarker.bind(marker)));
-        		marker.addContextMenu(markerMenu);*/
-
-                //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-            lat = lat_new
-            lon = lon_new
-         });
+    var polyline = new BMap.Polyline(
+      [new BMap.Point(lon, lat),new BMap.Point(lon_new, lat_new)],    
+      {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
+    ); 
+    map.addOverlay(polyline);
+    marker.setPosition(point);
+    map.panTo(point);
+    lat = lat_new
+    lon = lon_new
+  });
 </script>
 </html>
