@@ -28,28 +28,28 @@
     // Connecting to ROS
     // -----------------
 
-    // var ros = new ROSLIB.Ros({
-    //   url : 'ws://localhost:9090'
-    // });
+    var ros = new ROSLIB.Ros({
+      url : 'ws://192.168.23.62:9090'
+    });
 
-    // ros.on('connection', function() {
-    //   console.log('Connected to websocket server.');
-    // });
+    ros.on('connection', function() {
+      console.log('Connected to websocket server.');
+    });
 
-    // ros.on('error', function(error) {
-    //   console.log('Error connecting to websocket server: ', error);
-    // });
+    ros.on('error', function(error) {
+      console.log('Error connecting to websocket server: ', error);
+    });
 
-    // ros.on('close', function() {
-    //   console.log('Connection to websocket server closed.');
-    // });
+    ros.on('close', function() {
+      console.log('Connection to websocket server closed.');
+    });
 
 
-    // var listener = new ROSLIB.Topic({
-    //   ros : ros,
-    //   name : '/gps',
-    //   messageType : 'std_msgs/String'
-    // });
+    var listener = new ROSLIB.Topic({
+      ros : ros,
+      name : '/gps',
+      messageType : 'std_msgs/String'
+    });
   </script>
 </head>
 
@@ -123,7 +123,6 @@
         messageType : 'std_msgs/String'
       });
 
-
   function publish(str)
   {
     var twist = new ROSLIB.Message({data : str})
@@ -133,7 +132,7 @@
   function save_route()
   {
     route += ']}'
-    ppublish(route)
+    publish(route)
     console.log(route);
   }
 </script>
