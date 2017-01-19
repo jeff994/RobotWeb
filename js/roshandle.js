@@ -1,5 +1,5 @@
  var ros = new ROSLIB.Ros({
-     url: 'ws://192.168.23.62:9090'
+     url: 'ws://192.168.10.82:9090'
  });
 
  ros.on('connection', function() {
@@ -17,6 +17,12 @@
  var gps_listener = new ROSLIB.Topic({
      ros: ros,
      name: '/gps',
+     messageType: 'std_msgs/String'
+ });
+
+var parameter_listener = new ROSLIB.Topic({
+     ros: ros,
+     name: '/parameters',
      messageType: 'std_msgs/String'
  });
 

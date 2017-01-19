@@ -69,7 +69,8 @@
   map = new BMap.Map("allmap");            
   map.addControl(new BMap.ScaleControl());  
   map.addControl(new BMap.NavigationControl());  
-  map.centerAndZoom("上海", 19);           
+  var pntstart = new BMap.Point(121.635139, 31.2112262);
+  map.centerAndZoom(pntstart, 19);           
   //单击获取点击的经纬
   var point = new BMap.Point(0, 0);
   var point_new = new BMap.Point(0, 0); 

@@ -73,7 +73,7 @@
   <div  style="height:100%;width:100%;">
     <div id="allmap" style="float:left;height:100%;width:calc(100% - 130px);"></div>
     <div id="control" style="text-align: top; float:right;height:100%;width:130px">
-      <div align="right" style="height:calc(100% - 130px);width:130px">
+      <div align="right" style="height:calc(100% - 390px);width:130px">
         <table width="100%">
           <caption>Robot Status</caption>
           <col width="80">
@@ -83,43 +83,59 @@
             <th>Value</th>
           </tr>
           <tr>
-            <td style="height:20px;">Eanbled</td>
-            <td>1</td>
+            <td style="height:20px;">Enabled</td>
+            <td id = "IsEanble">1</td>
           </tr>
            <tr>
             <td style="height:20px;">Moving</td>
-            <td>1</td>
+            <td id = "IsMoving">1</td>
           </tr>
            <tr>
             <td style="height:20px;">Mission</td>
-            <td>1</td>
+            <td id = "OnMission">1</td>
           </tr>
            <tr>
             <td style="height:20px;">Obstacle</td>
-            <td>1</td>
+            <td id = "OnObstacle">1</td>
           </tr>
 
           <tr>
             <td style="height:20px;"> Direction</td>
-            <td>F</td>
+            <td id = "Direction">F</td>
           </tr>
           <tr>
             <td style="height:20px;">Speed</td>
-            <td>5</td>
+            <td id="Speed">5</td>
           </tr>
              <tr>
             <td style="height:20px;">Lon</td>
-            <td>5</td>
+            <td id = "Lon">5</td>
           </tr>
           </tr>
              <tr>
             <td style="height:20px;">Lat</td>
-            <td>5</td>
+            <td id = "Lat">5</td>
           </tr>
               </tr>
              <tr>
             <td style="height:20px;">Bearing</td>
-            <td>5</td>
+            <td id = "Bearing">5</td>
+          </tr>
+        </table>
+      </div>
+
+        <div  style="height:calc(100% - 260px);width:130px">
+        <table width="100%">
+          <caption>Route</caption>
+          <col width="65">
+          <col width="65">
+          <tr align="center"> 
+           <td><button type="button" onclick="save_route()">Init</button></td>
+           <td><button type="button" onclick="save_route()">Save</button></td> 
+          </tr>
+             <tr align="center"> 
+           <td><button type="button" onclick="save_route()">Execute</button></td>
+           <td><button type="button" onclick="save_route()">Load</button></td> 
           </tr>
         </table>
       </div>
@@ -156,16 +172,45 @@
         </table>
       </div>
     </div>
-    
-  </div>
-  <div overflow:auto>
-    
   </div>
 </body>
 <script type="text/javascript">
+
+  // Call back to get published parameters and put in the server 
+  parameter_listener.subscribe(function(message) {
+    var str = message.data; 
+    console.log(str); 
+    var var1_obj = JSON.parse(str);
+
+    console.log(var1_obj.parameters.ENABLE)
+    insertText("IsEanble", var1_obj.parameters.ENABLE)
+    insertText("IsMoving", var1_obj.parameters.MOVING)
+    insertText("OnMission", var1_obj.parameters.MISSION)
+    insertText("OnObstacle", var1_obj.parameters.OBSTACLE)
+    insertText("Direction", var1_obj.parameters.DIRECTION)
+    insertText("Lon", var1_obj.parameters.LONG)
+    insertText("Lat", var1_obj.parameters.LAT)
+    insertText("Bearing", var1_obj.parameters.BEARING)
+  });
+
+function insertText (id, txt) {
+      document.getElementById(id).innerHTML = txt;
+  }
+
+  var route; 
+  var map; 
+  var no_point;
+
   // 百度地图API功能
-  lat = 31.2
-  lon = 121.6
+  var lat = 31.2112262
+  var lon = 121.635139
+
+  function init_parameters()
+  {
+    no_point = 1; 
+    route = '{ "route" : ['; 
+  }
+
   var point = new BMap.Point(lon, lat);
   init_map("allmap", point);
   // add a marker for the ini point 
@@ -201,5 +246,44 @@
     lat = lat_new
     lon = lon_new
   });
+
+  init_parameters();
+
+  map.addEventListener("click",function(e){
+    if(no_point == 1)
+    {
+      route += '{"lon": "' + point.lng.toString() + '","lat":"' + point.lat.toString() + '"}';
+    }
+    route += ",";
+    point_new = new BMap.Point(e.point.lng, e.point.lat);
+    var marker = new BMap.Marker(point_new);
+    route += '{"lon": "' + e.point.lng.toString() + '","lat":"' + e.point.lat.toString() + '"}';
+    map.addOverlay(marker); 
+    if(no_point >= 1)
+    {
+      var polyline = new BMap.Polyline([    
+          point,
+          point_new
+         ],    
+        {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
+      ); 
+    }
+    map.addOverlay(polyline);
+    no_point = no_point + 1;
+    point = point_new; 
+    console.log(route);
+  });
+
+
+
+
+   function save_route() {
+     route += ']}'
+     publish_job(route)
+     console.log(route);
+     map.clearOverlays();
+     init_parameters(); 
+ }
+
 </script>
 </html>
