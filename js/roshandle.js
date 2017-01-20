@@ -52,6 +52,13 @@ var parameter_listener = new ROSLIB.Topic({
      publisher_command.publish(command);
  }
 
+// Init robot to it's original position 
+ function init()
+ {
+
+ }
+
+
  function execute() {
      publish_command('Demo');
      console.log('Perform demo job');
