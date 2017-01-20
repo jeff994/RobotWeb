@@ -134,7 +134,7 @@
            <td><button type="button" onclick="save_route()">Save</button></td> 
           </tr>
              <tr align="center"> 
-           <td><button type="button" onclick="save_route()">Execute</button></td>
+           <td><button type="button" onclick="execute()">Execute</button></td>
            <td><button type="button" onclick="save_route()">Load</button></td> 
           </tr>
         </table>
@@ -179,10 +179,10 @@
   // Call back to get published parameters and put in the server 
   parameter_listener.subscribe(function(message) {
     var str = message.data; 
-    console.log(str); 
+    //console.log(str); 
     var var1_obj = JSON.parse(str);
 
-    console.log(var1_obj.parameters.ENABLE)
+    //console.log(var1_obj.parameters.ENABLE)
     insertText("IsEanble", var1_obj.parameters.ENABLE)
     insertText("IsMoving", var1_obj.parameters.MOVING)
     insertText("OnMission", var1_obj.parameters.MISSION)
@@ -224,7 +224,7 @@ function insertText (id, txt) {
 
   // call back of handle of ros, update robot position on the map 
   gps_listener.subscribe(function(message) {
-    console.log('Received message on ' + gps_listener.name + ': ' + message.data);
+    //console.log('Received message on ' + gps_listener.name + ': ' + message.data);
     var [lonstr, latstr, bearingstr] = message.data.split(' ');
     lon_new = parseFloat(lonstr);
     lat_new = parseFloat(latstr)

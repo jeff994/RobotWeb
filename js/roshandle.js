@@ -52,6 +52,11 @@ var parameter_listener = new ROSLIB.Topic({
      publisher_command.publish(command);
  }
 
+ function execute() {
+     publish_command('Demo');
+     console.log('Perform demo job');
+ }
+
  function forward() {
      publish_command('Forward');
      console.log('Robot forwarding ');
