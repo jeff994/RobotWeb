@@ -1,288 +1,412 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <style type="text/css">
-    body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
-    </style>
-    <script type="text/javascript"
-    src="http://api.map.baidu.com/api?v=2.0&amp;ak=IRLYepkYHoZV6EYCBPC5sLlWkqu1RgL7">
-    </script>
-    <script type="text/javascript"
-    src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js">
-    </script>
-    <script type="text/javascript"
-    src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js">
-    </script>
-    <style type="text/css">
-    *,html,body,div,ul,li,a{margin:0;padding:0;list-style:none;}
-    center.fontCenter{text-align:center;font-size: 20px;color:#3d1e95;margin:10px auto;}
-    .navi{width:100%;margin:10px auto 0;overflow: hidden;background-color:#5721a9;}
-    .navi li{width:20%;float:left;}
-    .navi li a{width:100%;height:28px;font-size:12px;text-align:center;color:#ccc;padding-top:10px; text-decoration: none; display:block;}
-    .navi li a:hover{color:#fff;}
-    .auto-style1 {
-    text-align: center;
-    }
-    #sides{
-    margin:0;
-    }
-    #left{
-    float:left;
-    width:75%;
-    overflow:hidden;
-    }
-    #right{
-    float:left;
-    width:25%;
-    overflow:hidden;
-    }
-    .calculated-width {
-    width: -webkit-calc(100% - 130px);
-    width:    -moz-calc(100% - 130px);
-    width:         calc(100% - 130px);
-    }​
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
-    </style>
-    <title>机器人控制</title>
-    <script type="text/javascript" src='js/roshandle.js'></script>
-    <script type="text/javascript" src='js/videohandle.js'> </script>
-    <script type="text/javascript" src='js/maphandle.js'> </script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<style type="text/css">
+	body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+	</style>
+	<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&amp;ak=IRLYepkYHoZV6EYCBPC5sLlWkqu1RgL7">
+	</script>
+	<script type="text/javascript"
+	src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js">
+	</script>
+	<script type="text/javascript"
+	src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js">
+	</script>
+	<style type="text/css">
+	*,html,body,div,ul,li,a{margin:0;padding:0;list-style:none;}
+	center.fontCenter{text-align:center;font-size: 20px;color:#3d1e95;margin:10px auto;}
+	.navi{width:100%;margin:10px auto 0;overflow: hidden;background-color:#5721a9;}
+	.navi li{width:20%;float:left;}
+	.navi li a{width:100%;height:28px;font-size:12px;text-align:center;color:#ccc;padding-top:10px; text-decoration: none; display:block;}
+	.navi li a:hover{color:#fff;}
+	.auto-style1 {
+		text-align: center;
+	}
+	#sides{
+		margin:0;
+	}
+	#left{
+		float:left;
+		width:75%;
+		overflow:hidden;
+	}
+	#right{
+		float:left;
+		width:25%;
+		overflow:hidden;
+	}
+	.calculated-width {
+		width: -webkit-calc(100% - 130px);
+		width:    -moz-calc(100% - 130px);
+		width:         calc(100% - 130px);
+	}​
+	table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	</style>
+	<title>机器人控制</title>
+	<script type="text/javascript" src='js/roshandle.js'></script>
+	<script type="text/javascript" src='js/videohandle.js'> </script>
+	<script type="text/javascript" src='js/maphandle.js'> </script>
   </head>
   <body overflow:auto>
-    <script>
-    </script>
-    <div class="navi">
-      <ul>
-        <li><a href="index.html" target="_blank">主页</a></li>
-        <li><a href="map.html" target="_blank">地图</a></li>
-        <li><a href="interaction.html" target="_blank">交互</a></li>
-        <li><a href="control.html" target="_blank">控制</a></li>
-        <li><a href="config.html" target="_blank">配置</a></li>
-      </ul>
-    </div>
-    <div>
-      <center class="fontCenter">
-      机器人控制</center>
-    </div>
+	<script>
+	</script>
+	<div class="navi">
+	  <ul>
+		<li><a href="index.html" target="_blank">主页</a></li>
+		<li><a href="map.html" target="_blank">地图</a></li>
+		<li><a href="interaction.html" target="_blank">交互</a></li>
+		<li><a href="control.html" target="_blank">控制</a></li>
+		<li><a href="config.html" target="_blank">配置</a></li>
+	  </ul>
+	</div>
+	<div>
+	  <center class="fontCenter">
+	  机器人控制</center>
+	</div>
   </body>
   <div  style="position: relative;height:100%;width:100%;">
-    <div id="allmap" style="float:left;height:100%;width:calc(100% - 130px);"></div>
-    <div id="control" style="text-align: top; float:right;height:100%;width:130px">
-      <div align="right" style="height:70%;width:130px">
-        <table width="100%">
-          <caption>Robot Status</caption>
-          <col width="80">
-          <col width="50">
-          <tr  align = "left">
-            <th style="height:30px;" align="left">Name</th>
-            <th>Value</th>
-          </tr>
-          <tr>
-            <td style="height:20px;">Enabled</td>
-            <td id = "IsEanble">0</td>
-          </tr>
-           <tr>
-            <td style="height:20px;">Moving</td>
-            <td id = "IsMoving">0</td>
-          </tr>
-           <tr>
-            <td style="height:20px;">Mission</td>
-            <td id = "OnMission">0</td>
-          </tr>
-           <tr>
-            <td style="height:20px;">Obstacle</td>
-            <td id = "OnObstacle">0</td>
-          </tr>
+	<div id="allmap" style="float:left;height:100%;width:calc(100% - 130px);"></div>
+	<div id="control" style="text-align: top; float:right;height:400;width:130px">
+	  <div align="right" style="width:130px">
+		<table width="100%">
+		  <caption>Robot Status</caption>
+		  <col width="80">
+		  <col width="50">
+		  <tr  align = "left">
+			<th style="height:30px;" align="left">Name</th>
+			<th>Value</th>
+		  </tr>
+		  <tr>
+			<td style="height:20px;">开机</td>
+			<td id = "IsEanble">0</td>
+		  </tr>
+		   <tr>
+			<td style="height:20px;">移动</td>
+			<td id = "IsMoving">0</td>
+		  </tr>
+		   <tr>
+			<td style="height:20px;">任务</td>
+			<td id = "OnMission">0</td>
+		  </tr>
+		   <tr>
+			<td style="height:20px;">避障</td>
+			<td id = "OnObstacle">0</td>
+		  </tr>
 
-          <tr>
-            <td style="height:20px;"> Direction</td>
-            <td id = "Direction">S</td>
-          </tr>
-          <tr>
-            <td style="height:20px;">Speed</td>
-            <td id="Speed">0</td>
-          </tr>
-             <tr>
-            <td style="height:20px;">Lon</td>
-            <td id = "Lon">0.0</td>
-          </tr>
-          </tr>
-             <tr>
-            <td style="height:20px;">Lat</td>
-            <td id = "Lat">0.0</td>
-          </tr>
-              </tr>
-             <tr>
-            <td style="height:20px;">Bearing</td>
-            <td id = "Bearing">0.0</td>
-          </tr>
-        </table>
-      </div>
-        <div  style="position: absolute; bottom: 170px; height:150px;width:130px">
-        <table width="100%">
-          <caption>Route</caption>
-          <col width="65">
-          <col width="65">
-          <tr align="center"> 
-           <td><button type="button" onclick="save_route()">Init</button></td>
-           <td><button type="button" onclick="save_route()">Save</button></td> 
-          </tr>
-             <tr align="center"> 
-           <td><button type="button" onclick="execute()">Execute</button></td>
-           <td><button type="button" onclick="save_route()">Load</button></td> 
-          </tr>
-        </table>
-      </div>
-      <div align="bottom" style="position: absolute; bottom: 40px; height:130px;width:130px">
-        <table align="bottom" style="width:130px height:130px" >
-         <caption>Robot Control</caption>
-          <tbody>
-            <tr>
-              <td></td>
-              <td>
-                <p class="auto-style1" >
-                <img alt="" src="img/forward.gif" height = "42" width = "42" accesskey="w" onclick="forward()"></p>
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td class="auto-style1">
-              <img alt="" src="img/left.gif" height = "42" width = "42"  style="float: right" accesskey="A" onclick="left_turn()" ></td>
-              <td>
-                <p class="auto-style1">
-                  <img alt="" src="img/disabled.gif" accesskey="Q" height = "42" width = "42"  onclick="stop()">
-                </p>
-              </td>
-              <td><img alt="" src="img/right.gif" style="float: left" height = "42" width = "42"  accesskey="D" onclick="right_turn()"></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>
-                <p class="auto-style1"><img alt="" src="img/backward.gif" height = "42" width = "42"  accesskey="S" onclick="backward()"></p>
-              </td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+		  <tr>
+			<td style="height:20px;">方向</td>
+			<td id = "Direction">S</td>
+		  </tr>
+		  <tr>
+			<td style="height:20px;">速度</td>
+			<td id="Speed">0</td>
+		  </tr>
+			 <tr>
+			<td style="height:20px;">经度</td>
+			<td id = "Lon">0.0</td>
+		  </tr>
+		  </tr>
+			 <tr>
+			<td style="height:20px;">纬度</td>
+			<td id = "Lat">0.0</td>
+		  </tr>
+			  </tr>
+			 <tr>
+			<td style="height:20px;">角度</td>
+			<td id = "Bearing">0.0</td>
+		  </tr>
+		</table>
+	  </div>
+	  <div  style="position: absolute; bottom: 270px; height:100px;width:130px">
+		<table width="100%">
+		  <caption>行走定义任务</caption>
+		  <col width="65">
+		  <col width="65">
+		  <tr align="center"> 
+		   <td><button type="button"  onclick="init_route()" disabled = "1"> Start</button></td>
+		   <td><button type="button" id = "save_route3" disabled = "1" onclick="save_route()">Add</button></td> 
+		  </tr>
+		   <tr align="center"> 
+		   <td><button type="button"  onclick="init_route()" disabled = "1">Save</button></td>
+		   <td><button type="button" id = "save_route2" disabled = "disable_route_click()" onclick="save_route()">Execute</button></td> 
+		  </tr>
+		</table>
+	  </div>
+	  <div  style="position: absolute; bottom: 170px; height:100px;width:130px">
+		<table width="100%">
+		  <caption>点击定义任务</caption>
+		  <col width="65">
+		  <col width="65">
+		  <tr align="center"> 
+		   <td><button type="button" id = "start_route_click" onclick="init_route()">启用</button></td>
+		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">执行</button></td> 
+		  </tr>
+			 <tr align="center"> 
+		   <td><button type="button" id = "demo_route" onclick="execute()">演示任务</button></td>
+		   <td> <button type="button" onclick="reset_demo()">重置</button></td>
+		  </tr>
+		</table>
+	  </div>
+	  <div align="bottom" style="position: absolute; bottom: 40px; height:130px;width:130px">
+		<table align="bottom" style="width:130px height:130px" >
+		 <caption>Robot Control</caption>
+		  <tbody>
+			<tr>
+			  <td></td>
+			  <td>
+				<p class="auto-style1" >
+				<img alt="" src="img/forward.gif" height = "42" width = "42" accesskey="w" onclick="forward()"></p>
+			  </td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td class="auto-style1">
+			  <img alt="" src="img/left.gif" height = "42" width = "42"  style="float: right" accesskey="A" onclick="left_turn()" ></td>
+			  <td>
+				<p class="auto-style1">
+				  <img alt="" src="img/disabled.gif" accesskey="Q" height = "42" width = "42"  onclick="stop()">
+				</p>
+			  </td>
+			  <td><img alt="" src="img/right.gif" style="float: left" height = "42" width = "42"  accesskey="D" onclick="right_turn()"></td>
+			</tr>
+			<tr>
+			  <td></td>
+			  <td>
+				<p class="auto-style1"><img alt="" src="img/backward.gif" height = "42" width = "42"  accesskey="S" onclick="backward()"></p>
+			  </td>
+			  <td></td>
+			</tr>
+		  </tbody>
+		</table>
+	  </div>
+	</div>
   </div>
 </body>
+<script src="js/virtualjoystick.js"></script>
+
 <script type="text/javascript">
 
-  // Call back to get published parameters and put in the server 
-  parameter_listener.subscribe(function(message) {
-    var str = message.data; 
-    //console.log(str); 
-    var var1_obj = JSON.parse(str);
-
-    //console.log(var1_obj.parameters.ENABLE)
-    insertText("IsEanble", var1_obj.parameters.ENABLE)
-    insertText("IsMoving", var1_obj.parameters.MOVING)
-    insertText("OnMission", var1_obj.parameters.MISSION)
-    insertText("OnObstacle", var1_obj.parameters.OBSTACLE)
-    insertText("Direction", var1_obj.parameters.DIRECTION)
-    insertText("Lon", var1_obj.parameters.LONG)
-    insertText("Lat", var1_obj.parameters.LAT)
-    insertText("Bearing", var1_obj.parameters.BEARING)
-  });
-
-function insertText (id, txt) {
-      document.getElementById(id).innerHTML = txt;
-  }
-
+  var marker;
   var route; 
   var map; 
   var no_point;
+  var point; 
+  var robot_enabled;
 
-  // 百度地图API功能
-  var lat = 31.2112262
-  var lon = 121.635139
+  var lat = 31.2112262;
+  var lon = 121.635139;
+
+  Job_Enum = {ROUTE_CLICK:0, ROUTE_RUN:1, ROUTE_DISPLAY:2, IDLE:3}
+  var job_type = Job_Enum.ROUTE_DISPLAY
+
+  point = new BMap.Point(lon, lat);
+  init_map("allmap", point);
+  // add a marker for the ini point 
+  map.disableDragging();
+  init_marker();
+
+  // call back of handle of ros, update robot position on the map 
+  if(job_type == Job_Enum.ROUTE_DISPLAY)
+  {
+	  gps_listener.subscribe(function(message) {
+		//console.log('Received message on ' + gps_listener.name + ': ' + message.data);
+		var [lonstr, latstr, bearingstr] = message.data.split(' ');
+		lon_new = parseFloat(lonstr);
+		lat_new = parseFloat(latstr)
+		if(lat_new == lat && lon_new == lon)
+				return;
+		bearing = parseFloat(bearingstr)
+		point = new BMap.Point(lon_new, lat_new);
+
+		console.log('Old 1: ' + lon + ': ' + lat);
+		console.log('New 2: ' + lon_new + ': ' + lat_new);
+
+		var polyline = new BMap.Polyline(
+		  [new BMap.Point(lon, lat),new BMap.Point(lon_new, lat_new)],    
+		  {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
+		); 
+		map.addOverlay(polyline);
+		marker.setPosition(point);
+		map.panTo(point);
+		lat = lat_new
+		lon = lon_new
+	  });
+}
+  // handle of click to define route functions 
+  map.addEventListener("click",function(e){
+	if(job_type != Job_Enum.ROUTE_CLICK) 
+	{
+	  console.log('System not init for route test');
+	  return; 
+	}
+	if(no_point == 1)
+	{
+	  route += '{"lon": "' + point.lng.toString() + '","lat":"' + point.lat.toString() + '"}';
+	}
+	route += ",";
+	point_new = new BMap.Point(e.point.lng, e.point.lat);
+	var marker = new BMap.Marker(point_new);
+	route += '{"lon": "' + e.point.lng.toString() + '","lat":"' + e.point.lat.toString() + '"}';
+	map.addOverlay(marker); 
+	if(no_point >= 1)
+	{
+	  var polyline = new BMap.Polyline([    
+		  point,
+		  point_new
+		 ],    
+		{strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
+	  ); 
+	}
+	map.addOverlay(polyline);
+	no_point = no_point + 1;
+	point = point_new; 
+	console.log(route);
+  });
+
+	// Call back to get published parameters and put in the server 
+  parameter_listener.subscribe(function(message) {
+	var str = message.data; 
+	//console.log(str); 
+	var var1_obj = JSON.parse(str);
+	console.log(var1_obj)
+	insertText("IsEanble", var1_obj.parameters.ENABLE)
+	robot_enabled = var1_obj.parameters.ENABLE;
+	insertText("IsMoving", var1_obj.parameters.MOVING)
+	insertText("OnMission", var1_obj.parameters.MISSION)
+	insertText("OnObstacle", var1_obj.parameters.OBSTACLE)
+	insertText("Direction", var1_obj.parameters.DIRECTION)
+	insertText("Speed", var1_obj.parameters.SPEED)
+	insertText("Lon", var1_obj.parameters.LONG)
+	insertText("Lat", var1_obj.parameters.LAT)
+	insertText("Bearing", var1_obj.parameters.BEARING)
+  });
+
+  function disable_route_click()
+  {
+	return job_type != Job_Enum.ROUTE_CLICK;
+  }
+
+  // Init the html page for route 
+  function init_route()
+  {
+  	if(job_type != Job_Enum.ROUTE_CLICK)
+  	{
+		map.clearOverlays();
+		lat = 31.2112262;
+		lon = 121.635139;
+		point = new BMap.Point(lon, lat);
+		marker.setPosition(point);
+		map.panTo(point);
+		map.addOverlay(marker);
+		init_robot(); 
+		init_parameters(); 
+		job_type = Job_Enum.ROUTE_CLICK; //开始点击定义任务
+		document.getElementById('save_route').disabled = false; 
+		document.getElementById('demo_route').disabled = true; 
+		document.getElementById('start_route_click').firstChild.data = "关闭";
+	}else 
+	{
+		document.getElementById('save_route').disabled = true; 
+		document.getElementById('demo_route').disabled = false; 
+		job_type = Job_Enum.ROUTE_DISPLAY;
+		document.getElementById('start_route_click').firstChild.data = "启用";
+	}
+  }
+
+  function insertText (id, txt) {
+	document.getElementById(id).innerHTML = txt;
+  }
 
   function init_parameters()
   {
-    no_point = 1; 
-    route = '{ "route" : ['; 
+	no_point = 1; 
+	route = '{ "route" : ['; 
   }
 
-  var point = new BMap.Point(lon, lat);
-  init_map("allmap", point);
-  // add a marker for the ini point 
-  var marker = new BMap.Marker(point);  // 创建标注
-  map.addOverlay(marker);               // 将标注添加到地图中
-  var markerMenu=new BMap.ContextMenu();
-  markerMenu.addItem(new BMap.MenuItem('打开视频',openVideo.bind(marker)));
-  marker.addContextMenu(markerMenu);
-  marker.setPosition(point);
-  map.panTo(point);
+  function init_marker()
+  {
+	marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);               // 将标注添加到地图中
+	var markerMenu=new BMap.ContextMenu();
+	markerMenu.addItem(new BMap.MenuItem('打开视频',openVideo.bind(marker)));
+	marker.addContextMenu(markerMenu);
+	marker.setPosition(point);
+	map.panTo(point);
+  }
 
-  // call back of handle of ros, update robot position on the map 
-  gps_listener.subscribe(function(message) {
-    //console.log('Received message on ' + gps_listener.name + ': ' + message.data);
-    var [lonstr, latstr, bearingstr] = message.data.split(' ');
-    lon_new = parseFloat(lonstr);
-    lat_new = parseFloat(latstr)
-    if(lat_new == lat && lon_new == lon)
-            return;
-    bearing = parseFloat(bearingstr)
-    point = new BMap.Point(lon_new, lat_new);
+	if(job_type == Job_Enum.ROUTE_RUN) 
+	{
+		var joystick = new VirtualJoystick({
+			mouseSupport	: true,
+			stationaryBase	: true,
+			baseX		: 300,
+			baseY		: 300
+		});
+	}
 
-    console.log('Old 1: ' + lon + ': ' + lat);
-    console.log('New 2: ' + lon_new + ': ' + lat_new);
+	// console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
 
-    var polyline = new BMap.Polyline(
-      [new BMap.Point(lon, lat),new BMap.Point(lon_new, lat_new)],    
-      {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
-    ); 
-    map.addOverlay(polyline);
-    marker.setPosition(point);
-    map.panTo(point);
-    lat = lat_new
-    lon = lon_new
-  });
+	// var joystick  = new VirtualJoystick({
+	//   container : document.getElementById('container'),
+	//   mouseSupport  : true,
+	// });
+	// joystick.addEventListener('touchStart', function(){
+	//   console.log('down')
+	// })
+	// joystick.addEventListener('touchEnd', function(){
+	//   console.log('up')
+	// })
 
-  init_parameters();
-
-  map.addEventListener("click",function(e){
-    if(no_point == 1)
-    {
-      route += '{"lon": "' + point.lng.toString() + '","lat":"' + point.lat.toString() + '"}';
-    }
-    route += ",";
-    point_new = new BMap.Point(e.point.lng, e.point.lat);
-    var marker = new BMap.Marker(point_new);
-    route += '{"lon": "' + e.point.lng.toString() + '","lat":"' + e.point.lat.toString() + '"}';
-    map.addOverlay(marker); 
-    if(no_point >= 1)
-    {
-      var polyline = new BMap.Polyline([    
-          point,
-          point_new
-         ],    
-        {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
-      ); 
-    }
-    map.addOverlay(polyline);
-    no_point = no_point + 1;
-    point = point_new; 
-    console.log(route);
-  });
+	// setInterval(function(){
+	//   var outputEl  = document.getElementById('result');
+	//   outputEl.innerHTML  = '<b>Result:</b> '
+	//     + ' dx:'+joystick.deltaX()
+	//     + ' dy:'+joystick.deltaY()
+	//     + (joystick.right() ? ' right'  : '')
+	//     + (joystick.up()  ? ' up'   : '')
+	//     + (joystick.left()  ? ' left' : '')
+	//     + (joystick.down()  ? ' down'   : '') 
+	// }, 1/30 * 1000);
 
 
+  // function to save route 
+  function save_route() {
+	if(robot_enabled == '0') 
+	{
+		console.log("test")
+		stop()
+	}
+	if(robot_enabled == '1')
+	{
+		route += ']}'
+		publish_job(route)
+		console.log(route);
+		map.clearOverlays();
+		job_type = Job_Enum.ROUTE_DISPLAY; 
+		lat = 31.2112262;
+		lon = 121.635139;
+		point = new BMap.Point(lon, lat);
+		init_marker()
+	}
+  }
 
-
-   function save_route() {
-     route += ']}'
-     publish_job(route)
-     console.log(route);
-     map.clearOverlays();
-     init_parameters(); 
- }
+  	function reset_demo()
+	{
+		map.clearOverlays();
+		job_type = Job_Enum.ROUTE_DISPLAY; 
+		lat = 31.2112262;
+		lon = 121.635139;
+		point = new BMap.Point(lon, lat);
+		init_marker()
+		if(robot_enabled != '1')
+			stop()
+	}
 
 </script>
 </html>

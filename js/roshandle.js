@@ -1,5 +1,5 @@
  var ros = new ROSLIB.Ros({
-     url: 'ws://192.168.10.82:9090'
+     url: 'ws://192.168.10.252:9090'
  });
 
  ros.on('connection', function() {
@@ -32,6 +32,15 @@ var parameter_listener = new ROSLIB.Topic({
      messageType: 'std_msgs/String'
  });
 
+
+var publisher_init_job = new ROSLIB.Topic(
+{
+     ros:ros, 
+     name:"/init_job",
+     messageType: 'std_msgs/String'
+
+});
+
  var publisher_command = new ROSLIB.Topic({
      ros: ros,
      name: '/keyboard',
@@ -52,10 +61,12 @@ var parameter_listener = new ROSLIB.Topic({
      publisher_command.publish(command);
  }
 
-// Init robot to it's original position 
- function init()
- {
+// Init robot to it's original position, all the parameters are set to correct state 
 
+ function init_robot()
+ {
+     //publish_command("Init");
+     console.log('Init robot to starting state');
  }
 
 
