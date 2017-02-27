@@ -29,6 +29,7 @@
   var route; 
   var map; 
   var no_point; 
+  var init_point = {lon:31.2112262, lat:121.635139, bearing::0};
 </script>
 </head>
 
@@ -59,11 +60,6 @@
 </html>
 
 <script type="text/javascript">
-  function init_parameters()
-  {
-    no_point = 1; 
-    route = '{ "route" : ['; 
-  }
 
   // 百度地图API功能
   map = new BMap.Map("allmap");            

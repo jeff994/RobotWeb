@@ -123,7 +123,7 @@
 		  </tr>
 		</table>
 	  </div>
-	  <div  style="position: absolute; bottom: 270px; height:100px;width:130px">
+	  <div  style="position: absolute; bottom: 380px; height:100px;width:130px">
 		<table width="100%">
 		  <caption>行走定义任务</caption>
 		  <col width="65">
@@ -138,18 +138,26 @@
 		  </tr>
 		</table>
 	  </div>
-	  <div  style="position: absolute; bottom: 170px; height:100px;width:130px">
+	  <div  style="position: absolute; bottom: 170px; height:150px;width:130px">
 		<table width="100%">
-		  <caption>点击定义任务</caption>
+		  <caption>Click to define task</caption>
 		  <col width="65">
 		  <col width="65">
+		 <tr align="center"> 
+		   <td><button type="button" id = "reset_init_point" onclick="init_route()">Reset init point</button></td>
+		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">Set</button></td> 
+		  </tr>
+		   <tr align="center"> 
+		   <td><button type="button" id = "start_route_click" onclick="init_route()">No Loops</button></td>
+		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">10</button></td> 
+		  </tr>
 		  <tr align="center"> 
-		   <td><button type="button" id = "start_route_click" onclick="init_route()">启用</button></td>
-		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">执行</button></td> 
+		   <td><button type="button" id = "start_route_click" onclick="init_route()">start</button></td>
+		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">execute</button></td> 
 		  </tr>
 			 <tr align="center"> 
-		   <td><button type="button" id = "demo_route" onclick="execute()">演示</button></td>
-		   <td> <button type="button" onclick="reset_demo()">重置</button></td>
+		   <td><button type="button" id = "demo_route" onclick="execute()">demo</button></td>
+		   <td> <button type="button" onclick="reset_demo()">reset</button></td>
 		  </tr>
 		</table>
 	  </div>
@@ -407,6 +415,7 @@
 		if(robot_enabled != '1')
 			stop()
 	}
+
 
 </script>
 </html>

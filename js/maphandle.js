@@ -1,3 +1,4 @@
+
 function init_map(div_name, init_point)
 {
     // create a map for div 'allmap'
