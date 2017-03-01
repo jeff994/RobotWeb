@@ -103,11 +103,11 @@
 		  </tr>
 		  <tr align="center"> 
 		   <td><button type="button" id = "start_route_click" onclick="init_route()">start</button></td>
-		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">execute</button></td> 
+		   <td><button type="button" id = "undo_route_click" disabled = "disable_undo()" onclick="undo_ctrl_point()">undo</button></td> 
 		  </tr>
 			 <tr align="center"> 
-		   <td><button type="button" id = "demo_route" onclick="execute()">demo</button></td>
-		   <td> <button type="button" onclick="reset_demo()">reset</button></td>
+		   <td><button type="button" id = "demo_route" onclick="reset_demo()">Reset</button></td>
+		   <td> <button type="button" onclick="save_route()">Execute</button></td>
 		  </tr>
 		</table>
 	  </div>

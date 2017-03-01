@@ -2,6 +2,7 @@
   var marker, marker_init_point;
   var overlay_init, overlay_route; 
   var route_array = []; 
+  var no_runs = 10; 
   var map; 
   var no_point;
   var point;
@@ -34,6 +35,7 @@
 			console.log("Added a new control point in the route");
 			if(route_array.length == 1)
 			{
+				console.log("Between robot init and the starting position");
 				draw_init_route_link(init_point, point_new);
 			}
 			

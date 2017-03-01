@@ -3,9 +3,14 @@ function disable_route_click()
 	return job_type != Job_Enum.ROUTE_CLICK;
 }
 
- function insertText (id, txt) {
+function disable_undo()
+{
+	return (job_type != Job_Enum.ROUTE_CLICK && route_array.length > 0);
+}
+
+function insertText (id, txt) {
 	document.getElementById(id).innerHTML = txt;
- }
+}
 
 function init_parameters()
 {
