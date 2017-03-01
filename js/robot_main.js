@@ -52,7 +52,7 @@
 
   });
 
-  /*if(job_type == Job_Enum.ROUTE_DISPLAY)
+  if(job_type == Job_Enum.ROUTE_DISPLAY)
   {
 	  gps_listener.subscribe(function(message) {
 		//console.log('Received message on ' + gps_listener.name + ': ' + message.data);
@@ -63,21 +63,16 @@
 				return;
 		bearing = parseFloat(bearingstr)
 		point = new BMap.Point(lon_new, lat_new);
-
 		console.log('Old 1: ' + lon + ': ' + lat);
 		console.log('New 2: ' + lon_new + ': ' + lat_new);
-
-		var polyline = new BMap.Polyline(
-		  [new BMap.Point(lon, lat),new BMap.Point(lon_new, lat_new)],    
-		  {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}    
-		); 
-		map.addOverlay(polyline);
-		marker.setPosition(point);
+		marker_init_point.setPosition(point);
 		map.panTo(point);
 		lat = lat_new
 		lon = lon_new
 	  });
-}
+	}
+
+	/*
 
   // handle of click to define route functions 
   map.addEventListener("click",function(e){
