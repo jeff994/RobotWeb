@@ -63,8 +63,15 @@
 				return;
 		bearing = parseFloat(bearingstr)
 		point = new BMap.Point(lon_new, lat_new);
+
 		console.log('Old 1: ' + lon + ': ' + lat);
 		console.log('New 2: ' + lon_new + ': ' + lat_new);
+
+		var polyline = new BMap.Polyline(
+		  [new BMap.Point(lon, lat),new BMap.Point(lon_new, lat_new)],    
+		  {strokeColor:"green", strokeWeight:1, strokeOpacity:0.5}    
+		); 
+		map.addOverlay(polyline);
 		marker_init_point.setPosition(point);
 		map.panTo(point);
 		lat = lat_new
