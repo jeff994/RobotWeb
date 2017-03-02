@@ -94,20 +94,24 @@
 		  <col width="65">
 		  <col width="65">
 		 <tr align="center"> 
-		   <td><button type="button" id = "btn_reset_init_point" onclick="reset_init_point()">Init</button></td>
-		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">Set</button></td> 
+		   <td colspan="2"><button type="button" id = "btn_reset_init_point" onclick="reset_init_point()">Set Init Point</button></td>
 		  </tr>
 		   <tr align="center"> 
-		   <td><button type="button" id = "btn_loop_number" onclick="init_route()">Loops</button></td>
-		   <td><button type="button" id = "save_route" disabled = "disable_route_click()" onclick="save_route()">10</button></td> 
+		   <td><button type="button" id = "btn_loop_number">Loops</button></td>
+		   <td>10</td> 
 		  </tr>
 		  <tr align="center"> 
 		   <td><button type="button" id = "start_route_click" onclick="init_route()">start</button></td>
 		   <td><button type="button" id = "undo_route_click" disabled = "disable_undo()" onclick="undo_ctrl_point()">undo</button></td> 
 		  </tr>
 			 <tr align="center"> 
-		   <td><button type="button" id = "demo_route" onclick="reset_demo()">Reset</button></td>
-		   <td> <button type="button" onclick="save_route()">Execute</button></td>
+		   <td colspan="2"><button type="button" id = "demo_route" onclick="reset_demo()">Clear Route</button></td>
+		  </tr>
+		  <tr align="center">
+		   <td colspan="2"> <button type="button" id = "robot_switch" onclick="switch_robot()">On</button></td>
+		  </tr>
+		  <tr align="center">
+		   <td colspan="2"> <button type="button" id = "btn_execute" onclick="save_route()">Execute</button></td>
 		  </tr>
 		</table>
 	  </div>

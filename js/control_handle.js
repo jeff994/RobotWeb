@@ -45,23 +45,12 @@ function reset_init_point()
 	if(job_type != Job_Enum.INIT_POINT)
 	{
 		job_type = Job_Enum.INIT_POINT;
-		insertText("btn_reset_init_point", "Finish");
+		insertText("btn_reset_init_point", "Lock Init Point");
 
 	}else
 	{
-		insertText("btn_reset_init_point", "Init");
+		insertText("btn_reset_init_point", "Reset Init Point");
 		job_type = Job_Enum.IDLE;
 	}
 }
 
-function reset_demo()
-{
-	map.clearOverlays();
-	job_type = Job_Enum.ROUTE_DISPLAY; 
-	lat = 31.2112262;
-	lon = 121.635139;
-	point = new BMap.Point(lon, lat);
-	init_marker()
-	if(robot_enabled != '1')
-		stop()
-}

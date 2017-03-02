@@ -85,7 +85,7 @@ var publisher_init_job = new ROSLIB.Topic(
      console.log('Robot backwarding');
  }
 
- function stop() {
+ function on_off(){
      publish_command('Switch');
      console.log('Eanble/Distable robot');
  }
