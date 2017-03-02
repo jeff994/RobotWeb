@@ -8,6 +8,8 @@
   var point;
   var init_point = new BMap.Point( 121.635139, 31.2112262); 
   var robot_enabled = 0;
+  var robot_paused  = 0; 
+
 
   var lat = 31.2112262;
   var lon = 121.635139;
@@ -86,14 +88,25 @@ parameter_listener.subscribe(function(message) {
 	//console.log(var1_obj)
 	//insertText("IsEanble", var1_obj.parameters.ENABLE)
 	robot_enabled = var1_obj.parameters.ENABLE;
+	robot_paused = var1_obj.parameters.PAUSED;
+	if(robot_paused)
+	{
+		document.getElementById('robot_pause').firstChild.data = "Resume";
+	}else 
+	{
+		document.getElementById('robot_pause').firstChild.data = "Pause";
+	}
+
 	if(robot_enabled == 0)
 	{
 		document.getElementById('btn_execute').disabled = true; 
-		document.getElementById('robot_switch').firstChild.data = "off";
+		document.getElementById('robot_pause').disabled = true;
+		document.getElementById('robot_switch').firstChild.data = "on";
 	}else 
 	{
-		document.getElementById('btn_execute').disabled = false; 
-		document.getElementById('robot_switch').firstChild.data = "on";
+		document.getElementById('btn_execute').disabled = false;
+		document.getElementById('robot_pause').disabled = false;
+		document.getElementById('robot_switch').firstChild.data = "off";
 	}
 	//insertText("IsMoving", var1_obj.parameters.MOVING)
 	//insertText("OnMission", var1_obj.parameters.MISSION)

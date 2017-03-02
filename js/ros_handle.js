@@ -80,6 +80,17 @@ var publisher_init_job = new ROSLIB.Topic(
      console.log('Robot forwarding ');
  }
 
+function pause() {
+     publish_command('Pause');
+     console.log('Pause robot');
+ }
+
+
+function Resume() {
+     publish_command('Resume');
+     console.log('Resume Robot ');
+ }
+
  function backward() {
      publish_command('Back');
      console.log('Robot backwarding');
