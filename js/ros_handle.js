@@ -86,7 +86,7 @@ function pause() {
  }
 
 
-function Resume() {
+function resume() {
      publish_command('Resume');
      console.log('Resume Robot ');
  }

@@ -48,7 +48,14 @@ function save_route()
 		console.log(json);
 		publish_job(json);
 	}
+}
 
+function resume_pause()
+{
+	if(robot_paused)
+		resume();
+	else 
+		pause();
 }
 
 function switch_robot()
