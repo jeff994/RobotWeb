@@ -1,4 +1,5 @@
 
+  var connected = 0; 
   var marker, marker_init_point;
   var overlay_init, overlay_route; 
   var route_array = []; 
@@ -80,6 +81,35 @@
 		lon = lon_new
 	  });
 	}
+
+
+var dogBarkingBuffer = null;
+// Fix up prefixing
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var context = new AudioContext();
+
+function str2ab(str) {
+  var buf = new ArrayBuffer(str.length); // 2 bytes for each char
+  var bufView = new Uint8Array(buf);
+  for (var i=0, strLen=str.length; i<strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+
+/*audio_listener.subscribe(function(message){
+		console.log("test....")
+		console.log(message)
+		var audioData = str2ab(message.data);
+		console.log(message.data.length)
+		console.log(audioData)
+		 context.decodeAudioData(audioData, function(buffer) {
+	      dogBarkingBuffer = buffer;
+	    },  function(e){ console.log("Error with decoding audio data" + e.err); });
+
+	});*/
+
+
 
 parameter_listener.subscribe(function(message) {
 	var str = message.data; 

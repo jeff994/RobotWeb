@@ -1,17 +1,22 @@
  var ros = new ROSLIB.Ros({
-     url: 'ws://192.168.23.62:9090'
+     url: 'ws://192.168.23.178:9090'
  });
 
  ros.on('connection', function() {
      console.log('Connected to websocket server.');
+      document.getElementById('btn_connect_robot').firstChild.data = "Connected";
+     connected = 1
  });
 
  ros.on('error', function(error) {
      console.log('Error connecting to websocket server: ', error);
+     document.getElementById('btn_connect_robot').firstChild.data = "Connection error";
  });
 
  ros.on('close', function() {
      console.log('Connection to websocket server closed.');
+      document.getElementById('btn_connect_robot').firstChild.data = "Disconnected";
+     connected = 0;
  });
 
  var gps_listener = new ROSLIB.Topic({
@@ -19,6 +24,13 @@
      name: '/gps',
      messageType: 'std_msgs/String'
  });
+
+ var audio_listener = new ROSLIB.Topic({
+     ros:ros,
+     name:'/audio/audio',
+     messageType: 'audio_common_msgs/AudioData'
+ }
+ );
 
 var parameter_listener = new ROSLIB.Topic({
      ros: ros,

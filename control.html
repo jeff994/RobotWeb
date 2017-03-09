@@ -49,9 +49,7 @@
 	}
 	</style>
 	<title>机器人控制</title>
-	<script type="text/javascript" src='js/roshandle.js'></script>
-	<script type="text/javascript" src='js/videohandle.js'> </script>
-	<script type="text/javascript" src='js/maphandle.js'> </script>
+	
   </head>
   <body overflow:auto>
 	<script>
@@ -93,6 +91,8 @@
 		  <caption>Define route</caption>
 		  <col width="65">
 		  <col width="65">
+		  <tr align="center"> 
+		   <td colspan="2"><button type="button" id = "btn_connect_robot">Connected</button></td>
 		 <tr align="center"> 
 		   <td colspan="2"><button type="button" id = "btn_reset_init_point" onclick="reset_init_point()">Set Init Point</button></td>
 		  </tr>
@@ -157,9 +157,11 @@
   </div>
 </body>
 <script src="js/virtual_joystick.js"></script>
+
 <script src="js/ros_handle.js"></script>
-<script src = "js/map_handle.js" type="text/javascript"></script>
+<script type="text/javascript" src='js/video_handle.js'> </script>
 <script src = "js/control_handle.js" type="text/javascript"></script>
+<script src = "js/map_handle.js" type="text/javascript"></script>
 <script src = "js/robot_main.js" type="text/javascript"></script>
 <script src = "js/route_handle.js" type="text/javascript"></script>
 </html>
