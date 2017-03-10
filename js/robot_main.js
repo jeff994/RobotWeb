@@ -8,6 +8,7 @@
   var no_point;
   var point;
   var init_point = new BMap.Point( 121.635139, 31.2112262); 
+  var init_bearing = 0;
   var robot_enabled = 0;
   var robot_paused  = 0; 
 
@@ -23,6 +24,7 @@
   // add a marker for the ini point 
   map.disableDragging();
   set_init_point();
+
 
  // handle mouse click events under different conditions 
   map.addEventListener("click",function(e){
@@ -111,6 +113,51 @@ function str2ab(str) {
 
 
 
+	var joystick  = new VirtualJoystick({
+	  container : document.getElementById('container'),
+	  mouseSupport  : true,
+	  stationaryBase: true,
+	    baseX: 200,
+        baseY: 200,
+	});
+	joystick.addEventListener('touchStart', function(){
+	  console.log('down')
+	})
+	joystick.addEventListener('touchEnd', function(){
+	  console.log('up')
+	})
+
+	 var vectorFCArrow = new BMap.Marker(new BMap.Point(lon, lat), {
+	  // 初始化方向向上的闭合箭头
+	  icon: new BMap.Symbol(BMap_Symbol_SHAPE_BACKWARD_CLOSED_ARROW, {
+	    scale: 2,
+	    strokeWeight: 0.1,
+	    rotation: 0,//顺时针旋转30度
+	    fillColor: 'green',
+	    fillOpacity: 0.4
+	  })
+	});
+
+	setInterval(function(){
+		if(joystick.deltaY() >0 || joystick.deltaX() > 0)
+		{
+			var rad = Math.atan2(joystick.deltaY(), joystick.deltaX()); 
+			var deg = rad * (180 / Math.PI) - 90 
+				map.removeOverlay(vectorFCArrow);
+				vectorFCArrow = new BMap.Marker(new BMap.Point(lon, lat), {
+				  // 初始化方向向上的闭合箭头
+				  icon: new BMap.Symbol(BMap_Symbol_SHAPE_BACKWARD_CLOSED_ARROW, {
+				    scale: 2,
+				    strokeWeight: 0.1,
+				    rotation: deg,//顺时针旋转30度
+				    fillColor: 'green',
+				    fillOpacity: 0.4
+				  })
+			});
+			map.addOverlay(vectorFCArrow);
+		}
+	}, 1/30 * 1000);
+
 parameter_listener.subscribe(function(message) {
 	var str = message.data; 
 	//console.log(str); 
@@ -147,6 +194,8 @@ parameter_listener.subscribe(function(message) {
 	//insertText("Lat", var1_obj.parameters.LAT)
 	//insertText("Bearing", var1_obj.parameters.BEARING)
   });
+
+	
 
 	/*
 
