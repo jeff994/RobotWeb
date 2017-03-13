@@ -16,10 +16,12 @@
   var lat = 31.2112262;
   var lon = 121.635139;
 
-  Job_Enum = {ROUTE_CLICK:0, ROUTE_RUN:1, ROUTE_DISPLAY:2, INIT_POINT:3, ROBOT_CONTROL:4, IDLE:5};
+  Job_Enum = {ROUTE_CLICK:0, ROUTE_RUN:1, ROUTE_DISPLAY:2, INIT_POINT:3, ROBOT_CONTROL:4, IDLE:5}
+  var job_type = Job_Enum.ROBOT_CONTROL;
 
   point = new BMap.Point(lon, lat);
   init_map("allmap", point);
+  job_type == Job_Enum.ROUTE_CONTROL;
   // add a marker for the ini point 
   map.disableDragging();
   set_init_point();
@@ -122,10 +124,12 @@ function str2ab(str) {
 		});
 
 		joystick._container.addEventListener('mouseup', function(){
+			forward();
 		  	console.log('up1');
 		});
 
 		joystick._container.addEventListener('dblclick', function(){
+			 pause();
 		  console.log('up2')
 		});
 
