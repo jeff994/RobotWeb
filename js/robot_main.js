@@ -18,6 +18,8 @@
 
   Job_Enum = {ROUTE_CLICK:0, ROUTE_RUN:1, ROUTE_DISPLAY:2, INIT_POINT:3, ROBOT_CONTROL:4, IDLE:5};
 
+  var job_type = Job_Enum.ROUTE_DISPLAY;
+
   point = new BMap.Point(lon, lat);
   init_map("allmap", point);
   // add a marker for the ini point 
@@ -57,7 +59,7 @@
 
   if(job_type == Job_Enum.ROUTE_DISPLAY)
   {
-	  gps_listener.subscribe(function(message) {
+	/*  gps_listener.subscribe(function(message) {
 		//console.log('Received message on ' + gps_listener.name + ': ' + message.data);
 		var [lonstr, latstr, bearingstr] = message.data.split(' ');
 		lon_new = parseFloat(lonstr);
@@ -80,6 +82,7 @@
 		lat = lat_new
 		lon = lon_new
 	  });
+	  */
 	}
 
 
@@ -163,6 +166,20 @@ function str2ab(str) {
 		}, 1/30 * 1000);
 	}
 
+function update_robot_pos(lon_new, lat_new)
+{
+	if(lat_new == lat && lon_new == lon)
+		return;
+	point = new BMap.Point(lon_new, lat_new);
+	var polyline = new BMap.Polyline(
+	  [new BMap.Point(lon, lat),new BMap.Point(lon_new, lat_new)],    
+	  {strokeColor:"green", strokeWeight:1, strokeOpacity:0.5}    
+	); 
+	map.addOverlay(polyline);
+	marker_robot.setPosition(point);
+	lat = lat_new
+	lon = lon_new
+}
 
 parameter_listener.subscribe(function(message) {
 	var str = message.data; 
@@ -196,8 +213,9 @@ parameter_listener.subscribe(function(message) {
 	//insertText("OnObstacle", var1_obj.parameters.OBSTACLE)
 	//insertText("Direction", var1_obj.parameters.DIRECTION)
 	//insertText("Speed", var1_obj.parameters.SPEED)
-	//insertText("Lon", var1_obj.parameters.LONG)
-	//insertText("Lat", var1_obj.parameters.LAT)
+	console.log(var1_obj.parameters.LONG)
+	console.log(var1_obj.parameters.LAT)
+	update_robot_pos(var1_obj.parameters.LONG, var1_obj.parameters.LAT);
 	//insertText("Bearing", var1_obj.parameters.BEARING)
   });
 
