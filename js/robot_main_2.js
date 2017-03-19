@@ -8,7 +8,7 @@ var map;
 var no_point;
 var point;
 var init_point = new BMap.Point( 121.635139, 31.2112262); 
-var init_bearing = 0;
+var new_bearing = 0;
 var bearing = 0; 
 var current_bearing = 0;
 var robot_enabled = 0;
@@ -36,32 +36,32 @@ var joystick  = new VirtualJoystick({
 });
 
 joystick._container.addEventListener('mouseup', function(){
-	publish_command('Resume');
 	
-	forward();
+	//forward();
+	resume();
   	console.log('up1');
 });
 
 joystick._container.addEventListener('mousedown', function(){
-	on_off();
-	forward();
-  	console.log('up1');
+	if(!robot_enabled) on_off();
+	pause();
+	//forward();
+  	//console.log('up1');
 });
 
 
 joystick._container.addEventListener('dblclick', function(){
-	 pause();
+	pause();
   	console.log('up2')
 });
 
 var vectorFCArrow; 
 
 setInterval(function(){
-	if(joystick.deltaY() >0 || joystick.deltaX() > 0)
+	if(joystick.deltaY() !=0 || joystick.deltaX() != 0)
 	{
 		var rad = Math.atan2(joystick.deltaY(), joystick.deltaX()); 
-		var deg = rad * (180 / Math.PI);
-		console.log("Degree current %f", deg - 90)
+		var deg = rad * (180 / Math.PI) ;
 		map.removeOverlay(vectorFCArrow);
 		vectorFCArrow = new BMap.Marker(new BMap.Point(lon, lat), {
 			  // 初始化方向向上的闭合箭头
@@ -73,9 +73,21 @@ setInterval(function(){
 			    fillOpacity: 0.4
 			  })
 		});
+		if(deg < 0) deg = deg + 360;
+		deg = (deg + 90)%360;
+		diff = Math.abs(deg - current_bearing); 
+		if(diff < 350 || diff > 10)
+		{
+			console.log("Start to move to ", deg)
+			turn_and_move(deg);
+		}
+		console.log("Degree current %f %f", current_bearing, deg)
 		map.addOverlay(vectorFCArrow);
 	}
 }, 1/30 * 1000);
+
+
+
 
 parameter_listener.subscribe(function(message) {
 	var str = message.data; 
@@ -109,6 +121,8 @@ parameter_listener.subscribe(function(message) {
 	//insertText("Lon", var1_obj.parameters.LONG)
 	//insertText("Lat", var1_obj.parameters.LAT)
 	update_robot_pos(var1_obj.parameters.LONG, var1_obj.parameters.LAT);
+	current_bearing = var1_obj.parameters.BEARING;
+	//console.log("Currenct bearing %d", current_bearing)
 	//insertText("Bearing", var1_obj.parameters.BEARING)
   });
 

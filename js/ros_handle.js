@@ -1,5 +1,5 @@
  var ros = new ROSLIB.Ros({
-     url: 'ws://192.168.3.222:9090'
+     url: 'ws://192.168.23.62:9090'
  });
 
  ros.on('connection', function() {
@@ -43,6 +43,10 @@ var parameter_listener = new ROSLIB.Topic({
      name: '/job',
      messageType: 'std_msgs/String'
  });
+
+function ControlObject (bearing) {
+    this.bearing           = bearing;
+}
 
 var publisher_control = new ROSLIB.Topic({
      ros: ros,
@@ -126,4 +130,15 @@ function resume() {
  function right_turn() {
      publish_command('Turn_East');
      console.log('Right turn');
+ }
+
+ function turn_and_move(bearing)
+ {
+     var control_object = new ControlObject(bearing);
+     var json = JSON.stringify(control_object);
+     console.log(json)
+     var twist = new ROSLIB.Message({
+         data: json
+     });
+     publisher_control.publish(twist);
  }
