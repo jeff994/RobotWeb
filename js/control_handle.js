@@ -41,7 +41,7 @@ function set_init_point()
 		//var icon 			= new BMap.Icon(icons, new BMap.Size(32, 32)); //显示图标大小
 		//marker_robot.setIcon(icon);//设置标签的图标为自定义图标
 		marker_robot.addContextMenu(markerMenu);
-		//map.addOverlay(marker_init_point);    
+		map.addOverlay(marker_init_point);    
 		map.addOverlay(marker_robot);    
 	}
 	else
