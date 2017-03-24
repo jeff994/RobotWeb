@@ -1,5 +1,5 @@
  var ros = new ROSLIB.Ros({
-     url: 'ws://192.168.23.62:9090'
+     url: 'ws://192.168.3.222:9090'
  });
 
  ros.on('connection', function() {
@@ -44,8 +44,16 @@ var parameter_listener = new ROSLIB.Topic({
      messageType: 'std_msgs/String'
  });
 
+// Define objects for communication 
 function ControlObject (bearing) {
     this.bearing           = bearing;
+}
+
+function CommunicateObject(url, robot_id, control_id)
+{
+     this.url            = url; 
+     this.robot_id       = robot_id;
+     this.control_id     = control_id; 
 }
 
 var publisher_control = new ROSLIB.Topic({
@@ -62,11 +70,19 @@ var publisher_init_job = new ROSLIB.Topic(
 
 });
 
- var publisher_command = new ROSLIB.Topic({
+ var publisher_communicate = new ROSLIB.Topic({
+     ros: ros,
+     name: '/communicate',
+     messageType: 'std_msgs/String'
+ });
+
+
+  var publisher_command = new ROSLIB.Topic({
      ros: ros,
      name: '/keyboard',
      messageType: 'std_msgs/String'
  });
+
 
  function publish_job(str) {
      var twist = new ROSLIB.Message({
@@ -141,4 +157,16 @@ function resume() {
          data: json
      });
      publisher_control.publish(twist);
+ }
+
+// Start communicate with the robot, send the necessary information to the robot to start video calls
+ function start_communicate(url, robot_id, control_id)
+ {
+     var comm_object = new CommunicateObject(url, robot_id, control_id);
+     var json = JSON.stringify(comm_object); 
+     console.log(json)
+     var twist = new ROSLIB.Message({
+         data: json
+     });
+     publisher_communicate.publish(twist);
  }

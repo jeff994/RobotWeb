@@ -213,8 +213,8 @@ parameter_listener.subscribe(function(message) {
 	//insertText("OnObstacle", var1_obj.parameters.OBSTACLE)
 	//insertText("Direction", var1_obj.parameters.DIRECTION)
 	//insertText("Speed", var1_obj.parameters.SPEED)
-	console.log(var1_obj.parameters.LONG)
-	console.log(var1_obj.parameters.LAT)
+	//console.log(var1_obj.parameters.LONG)
+	//console.log(var1_obj.parameters.LAT)
 	update_robot_pos(var1_obj.parameters.LONG, var1_obj.parameters.LAT);
 	//insertText("Bearing", var1_obj.parameters.BEARING)
   });

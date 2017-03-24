@@ -36,12 +36,12 @@ function set_init_point()
 		});
 
 		var markerMenu		= new BMap.ContextMenu();
-		//markerMenu.addItem(new BMap.MenuItem('打开视频',openVideo.bind(marker)));
+		markerMenu.addItem(new BMap.MenuItem('视频对话',openVideo.bind(marker_robot)));
 		//var icons 			= "img/init_point.png"; //这个是你要显示坐标的图片的相对路径
 		//var icon 			= new BMap.Icon(icons, new BMap.Size(32, 32)); //显示图标大小
-		//marker_init_point.setIcon(icon);//设置标签的图标为自定义图标
-		//marker_init_point.addContextMenu(markerMenu);
-		map.addOverlay(marker_init_point);    
+		//marker_robot.setIcon(icon);//设置标签的图标为自定义图标
+		marker_robot.addContextMenu(markerMenu);
+		//map.addOverlay(marker_init_point);    
 		map.addOverlay(marker_robot);    
 	}
 	else
